@@ -41,11 +41,21 @@ const DrawBoard = ({ onClearLines, clearLines }) => {
     isDrawing.current = false;
   };
 
+  const submit = () => {
+    const canvas = document.getElementsByTagName("canvas")[0]; // send to server canvas.toDataUrl
+    // console.log(typeof draw[0].toDataURL());
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  };
+  const clearBoard = () => {
+    setLines([]);
+  };
+
   return (
     <div className=" text-center text-dark">
       <Stage
-        width={600}
-        height={600}
+        width={300}
+        height={300}
         onMouseDown={handleMouseDown}
         onMousemove={handleMouseMove}
         onMouseup={handleMouseUp}
@@ -60,13 +70,12 @@ const DrawBoard = ({ onClearLines, clearLines }) => {
               strokeWidth={2}
               tension={0.5}
               lineCap="round"
-              globalCompositeOperation={
-                line.tool === "eraser" ? "destination-out" : "source-over"
-              }
             />
           ))}
         </Layer>
       </Stage>
+      <button onClick={submit}>sent</button>
+      <button onClick={clearBoard}>clear</button>
     </div>
   );
 };

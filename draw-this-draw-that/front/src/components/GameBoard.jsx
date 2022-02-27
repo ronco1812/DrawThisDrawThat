@@ -3,6 +3,7 @@ import Player from "./Player";
 import WordInput from "./WordInput";
 import WordOption from "./WordOption";
 import "./GameBoard.css";
+import { useState } from "react";
 export default function GameBoard(props) {
   return (
     <div>
