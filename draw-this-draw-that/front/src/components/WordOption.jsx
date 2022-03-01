@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import words from "../helpers/words.json";
+import { Outlet, Link } from "react-router-dom";
 
-const words = require("../helpers/words.json");
 export default function WordOption(props) {
   const [easy, setEasy] = useState("");
   const [medium, setMedium] = useState("");
@@ -15,9 +16,27 @@ export default function WordOption(props) {
   return (
     <div>
       <h3>choose a word to Draw</h3>
-      <button>{easy}</button>
-      <button>{medium}</button>
-      <button>{hard}</button>
+      <Link to="/game">
+        <div>
+          <label>easy :</label>
+          <br />
+          <button>{easy}</button>
+        </div>
+
+        <div>
+          <label>medium :</label>
+          <br />
+          <button>{medium}</button>
+        </div>
+
+        <div>
+          <label>hard :</label>
+          <br />
+
+          <button>{hard}</button>
+        </div>
+      </Link>
+      <Outlet />
     </div>
   );
 }

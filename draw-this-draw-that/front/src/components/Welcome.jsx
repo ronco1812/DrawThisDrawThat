@@ -1,13 +1,23 @@
-import { Outlet, Link } from "react-router-dom";
-
+import { useState } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 export default function Welcome(props) {
+  const [name, setName] = useState("");
+  const { socket } = props;
+  const navigator = useNavigate();
+  const submitName = () => {
+    if (!name) return;
+    socket.emit("submit-name", { name }); // backend!
+    navigator("/loader");
+  };
   return (
     <div>
-      <input type={"text"} placeholder={"enter your name"}></input>
-      <Link to="/game">
-        <button>start playin!</button>
-      </Link>
-      <Outlet />
+      <input
+        value={name}
+        onChange={({ target: { value } }) => setName(value)}
+        type="text"
+        placeholder="enter your name"
+      />
+      <button onClick={submitName}>start playin!</button>
     </div>
   );
 }

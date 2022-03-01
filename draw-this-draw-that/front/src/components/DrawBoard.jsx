@@ -44,8 +44,9 @@ const DrawBoard = ({ onClearLines, clearLines }) => {
   const submit = () => {
     const canvas = document.getElementsByTagName("canvas")[0]; // send to server canvas.toDataUrl
     // console.log(typeof draw[0].toDataURL());
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    // send to back
+    // move to loader after response
+    clearBoard();
   };
   const clearBoard = () => {
     setLines([]);
