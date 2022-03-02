@@ -1,14 +1,10 @@
 import { React } from "react";
 import { Stage, Layer, Line } from "react-konva";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
-const DrawBoard = ({ onClearLines, clearLines }) => {
+const DrawBoard = ({ setDraw }) => {
   const [lines, setLines] = useState([]);
   const isDrawing = useRef(false);
-
-  useEffect(() => {
-    //loadImage();
-  }, [clearLines]);
 
   const handleMouseDown = (e) => {
     isDrawing.current = true;
@@ -42,10 +38,8 @@ const DrawBoard = ({ onClearLines, clearLines }) => {
   };
 
   const submit = () => {
-    const canvas = document.getElementsByTagName("canvas")[0]; // send to server canvas.toDataUrl
-    // console.log(typeof draw[0].toDataURL());
-    // send to back
-    // move to loader after response
+    const canvas = document.getElementsByTagName("canvas")[0];
+    setDraw(canvas.toDataURL());
     clearBoard();
   };
   const clearBoard = () => {

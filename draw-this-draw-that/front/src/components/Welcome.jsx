@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Welcome(props) {
   const [name, setName] = useState("");
   const { socket } = props;
@@ -7,7 +7,9 @@ export default function Welcome(props) {
   const submitName = () => {
     if (!name) return;
     socket.emit("submit-name", { name }); // backend!
-    navigator("/loader");
+    socket.on("name-submitted", (data) =>
+      data.load ? navigator("/loader") : navigator("/guess")
+    );
   };
   return (
     <div>
