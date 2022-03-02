@@ -25,12 +25,11 @@ io.on("connection", (socket) => {
     } else players[0].emit("guess-now", data);
   });
 
-  socket.on("disconnect", () => {
-    io.emit("disconnected", socket);
+  socket.on("disconnect", (socket) => {
+    io.emit("left-game", socket);
   });
 });
 
-// disconnect
 http.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

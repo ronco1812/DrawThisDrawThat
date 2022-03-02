@@ -26,6 +26,7 @@ export default function GameBoard(props) {
   const [medium, setMedium] = useState("");
   const [hard, setHard] = useState("");
   const [word, setWord] = useState("");
+  const [level, setLevel] = useState("");
   useEffect(() => {
     setEasy(words.easy[Math.floor(Math.random() * words.easy.length)]);
     setMedium(words.medium[Math.floor(Math.random() * words.medium.length)]);
@@ -35,9 +36,9 @@ export default function GameBoard(props) {
   const [draw, setDraw] = useState("");
   useEffect(() => {
     if (draw) {
-      socket.emit("submit-draw", { draw, word });
-      socket.on("disconnected", ({ name }) => {
-        notyf.success(`${name} has just left the chat`);
+      socket.emit("submit-draw", { draw, word, level });
+      socket.on("left-game", ({ name }) => {
+        notyf.success(`your opponent has disconnected, the game is over!`);
       });
       navigator("/guess");
     }
@@ -47,8 +48,6 @@ export default function GameBoard(props) {
   return (
     <StyledContainer>
       <div>
-        {/* <h2>Draw this Draw that ✏️</h2>
-        <br /> */}
         {word ? (
           <>
             <h3>Drawing: {word}</h3>
@@ -70,20 +69,41 @@ export default function GameBoard(props) {
             <div>
               <label>easy :</label>
               <br />
-              <button onClick={() => setWord(easy)}>{easy}</button>
+              <button
+                onClick={() => {
+                  setWord(easy);
+                  setLevel("easy");
+                }}
+              >
+                {easy}
+              </button>
             </div>
 
             <div>
               <label>medium :</label>
               <br />
-              <button onClick={() => setWord(medium)}>{medium}</button>
+              <button
+                onClick={() => {
+                  setWord(medium);
+                  setLevel("medium");
+                }}
+              >
+                {medium}
+              </button>
             </div>
 
             <div>
               <label>hard :</label>
               <br />
 
-              <button onClick={() => setWord(hard)}>{hard}</button>
+              <button
+                onClick={() => {
+                  setWord(hard);
+                  setLevel("hard");
+                }}
+              >
+                {hard}
+              </button>
             </div>
           </div>
         )}
