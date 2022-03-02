@@ -1,5 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import notyf from "../helpers/notyf";
+import styled from "styled-components";
+const StyledContainer = styled.div`
+  text-align: center;
+  background-color: lightblue;
+  border: 20px solid lightblue;
+  border-radius: 30px 30px 30px 30px;
+  box-shadow: -2px 5px 33px 12px #cfcd8a;
+  margin-top: 100px;
+  margin-left: 100px;
+  margin-right: 100px;
+  height: 400px;
+  font-family: cursive;
+`;
 export default function Guess(props) {
   const navigator = useNavigate();
   const { socket } = props;
@@ -8,7 +22,7 @@ export default function Guess(props) {
   const [word, setWord] = useState("");
   const checkWord = ({ target: { value } }) => {
     if (value === word) {
-      //notyf
+      notyf.success("guessed the word");
       navigator("/game");
     }
   };
@@ -17,16 +31,29 @@ export default function Guess(props) {
     setImage(data.draw);
     setWord(data.word);
   });
+  socket.on("disconnect", ({ name }) => {
+    notyf.success(`${name} has just left the chat`);
+  });
   return (
     <>
-      {wait ? (
-        "other player turn"
-      ) : (
-        <div>
-          <img src={image} alt="draw" />
-          <input onChange={checkWord} />
-        </div>
-      )}
+      <StyledContainer>
+        {wait ? (
+          "other player currently drawing . . ."
+        ) : (
+          <div>
+            <h3>Guess ✏️</h3>
+            <img
+              src={image}
+              width="270px"
+              height="270px"
+              alt="draw"
+              style={{ backgroundColor: "lightyellow" }}
+            />
+            <br />
+            <input onChange={checkWord} placeholder="maybe... computer?" />
+          </div>
+        )}
+      </StyledContainer>
     </>
   );
 }

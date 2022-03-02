@@ -24,11 +24,11 @@ io.on("connection", (socket) => {
       players[1].emit("guess-now", data);
     } else players[0].emit("guess-now", data);
   });
+
+  socket.on("disconnect", () => {
+    io.emit("disconnected", socket);
+  });
 });
-
-// socket start playing
-
-// socket to send draw
 
 // disconnect
 http.listen(PORT, () => {

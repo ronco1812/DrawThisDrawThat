@@ -47,31 +47,41 @@ const DrawBoard = ({ setDraw }) => {
   };
 
   return (
-    <div className=" text-center text-dark">
-      <Stage
-        width={300}
-        height={300}
-        onMouseDown={handleMouseDown}
-        onMousemove={handleMouseMove}
-        onMouseup={handleMouseUp}
-        className="canvas-stage"
-      >
-        <Layer>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke="#df4b26"
-              strokeWidth={2}
-              tension={0.5}
-              lineCap="round"
-            />
-          ))}
-        </Layer>
-      </Stage>
-      <button onClick={submit}>sent</button>
-      <button onClick={clearBoard}>clear</button>
-    </div>
+    <>
+      <div style={{ position: "absolute" }}>
+        <Stage
+          width={290}
+          height={290}
+          onMouseDown={handleMouseDown}
+          onMousemove={handleMouseMove}
+          onMouseup={handleMouseUp}
+        >
+          <Layer>
+            {lines.map((line, i) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke="#df4b26"
+                strokeWidth={2}
+                tension={0.5}
+                lineCap="round"
+              />
+            ))}
+          </Layer>
+        </Stage>
+        <div
+          style={{
+            position: "relative",
+            left: "300px",
+            bottom: "200px",
+            display: "inline-grid",
+          }}
+        >
+          <button onClick={submit}>send</button>
+          <button onClick={clearBoard}>clear</button>
+        </div>
+      </div>
+    </>
   );
 };
 
