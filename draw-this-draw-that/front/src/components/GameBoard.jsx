@@ -15,9 +15,50 @@ const StyledContainer = styled.div`
   font-family: cursive;
 `;
 const words = {
-  easy: ["ball", "Bible", "bikini", "book", "bucket", "camera", "church"],
-  medium: ["mailbox", "recycle", "sandcastle", "stairs", "tire", "toothbrush"],
-  hard: ["crayon", "fireworks", "high heel", "ice cream", "cone", "lamp"],
+  easy: [
+    "ball",
+    "bikini",
+    "book",
+    "bucket",
+    "camera",
+    "chair",
+    "bottle",
+    "sun",
+    "clock",
+    "tree",
+    "human",
+    "fish",
+  ],
+  medium: [
+    "mailbox",
+    "recycle",
+    "sandcastle",
+    "stairs",
+    "tire",
+    "toothbrush",
+    "dog",
+    "computer",
+    "bed",
+    "car",
+    "bird",
+    "basket",
+    "oven",
+  ],
+  hard: [
+    "crayon",
+    "fireworks",
+    "high heel",
+    "ice cream",
+    "cone",
+    "lamp",
+    "church",
+    "window",
+    "phone",
+    "tv",
+    "paper",
+    "moon",
+    "snake",
+  ],
 };
 export default function GameBoard(props) {
   const navigator = useNavigate();
