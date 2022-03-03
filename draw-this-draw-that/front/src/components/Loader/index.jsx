@@ -8,7 +8,7 @@ export default function Loader(props) {
   socket.on("name-submitted", (data) => {
     data.players.length === 2 && navigator("/game");
   });
-  socket.on("left-game", ({ name }) => {
+  socket.on("left-game", () => {
     notyf.success(`your opponent has disconnected, the game is over!`);
   });
   const StyledContainer = styled.div`

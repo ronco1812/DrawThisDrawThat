@@ -6,6 +6,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const PORT = process.env.PORT || 8080;
 const players = [];
+let score = 0;
 io.on("connection", (socket) => {
   console.log("a user connected");
   socket.on("submit-name", ({ name }) => {
@@ -23,6 +24,17 @@ io.on("connection", (socket) => {
     if (players[0] === socket) {
       players[1].emit("guess-now", data);
     } else players[0].emit("guess-now", data);
+  });
+
+  socket.on("change-score", ({ level }) => {
+    if (level === "easy") {
+      score += 1;
+    } else if (level === "medium") {
+      score += 3;
+    } else if (level === "hard") {
+      score += 5;
+    }
+    io.emit("update-score", { score });
   });
 
   socket.on("disconnect", (socket) => {

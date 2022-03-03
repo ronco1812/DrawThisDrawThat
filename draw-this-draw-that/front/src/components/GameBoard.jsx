@@ -27,6 +27,7 @@ export default function GameBoard(props) {
   const [hard, setHard] = useState("");
   const [word, setWord] = useState("");
   const [level, setLevel] = useState("");
+  const [score, setScore] = useState(0);
   useEffect(() => {
     setEasy(words.easy[Math.floor(Math.random() * words.easy.length)]);
     setMedium(words.medium[Math.floor(Math.random() * words.medium.length)]);
@@ -37,7 +38,7 @@ export default function GameBoard(props) {
   useEffect(() => {
     if (draw) {
       socket.emit("submit-draw", { draw, word, level });
-      socket.on("left-game", ({ name }) => {
+      socket.on("left-game", () => {
         notyf.success(`your opponent has disconnected, the game is over!`);
       });
       navigator("/guess");
@@ -45,12 +46,16 @@ export default function GameBoard(props) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draw]);
+  socket.on("update-score", ({ score }) => {
+    setScore(score);
+  });
   return (
     <StyledContainer>
       <div>
         {word ? (
           <>
             <h3>Drawing: {word}</h3>
+            <h5>session score : {score}</h5>
             <div
               style={{
                 width: "300px",

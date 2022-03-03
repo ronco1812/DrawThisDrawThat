@@ -27,7 +27,7 @@ export default function Welcome(props) {
   const submitName = () => {
     if (!name) return;
     socket.emit("submit-name", { name });
-    socket.on("left-game", ({ name }) => {
+    socket.on("left-game", () => {
       notyf.success(`your opponent has disconnected, the game is over!`);
     });
     socket.on("name-submitted", (data) =>
