@@ -1,16 +1,13 @@
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import notyf from "../../helpers/notyf";
 export default function Loader(props) {
   const navigator = useNavigate();
   const { socket } = props;
   socket.on("name-submitted", (data) => {
     data.players.length === 2 && navigator("/game");
   });
-  socket.on("left-game", () => {
-    notyf.success(`your opponent has disconnected, the game is over!`);
-  });
+
   const StyledContainer = styled.div`
     text-align: center;
     background-color: lightblue;

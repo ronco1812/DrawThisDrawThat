@@ -10,7 +10,10 @@ let score = 0;
 io.on("connection", (socket) => {
   console.log("a user connected");
   socket.on("submit-name", ({ name }) => {
-    if (players.length === 2) return;
+    if (players.length === 2) {
+      socket.emit("full", true);
+      return;
+    }
     socket.name = name;
     players.push(socket);
     const load = players.length === 1;
@@ -37,8 +40,12 @@ io.on("connection", (socket) => {
     io.emit("update-score", { score });
   });
 
-  socket.on("disconnect", (socket) => {
-    io.emit("left-game", socket);
+  socket.on("disconnect", () => {
+    if (!players.includes(socket)) return;
+    const index = players.indexOf(socket);
+    const player = players.splice(index, 1)[0];
+    io.emit("left-game", player?.name);
+    players.length = 0;
   });
 });
 

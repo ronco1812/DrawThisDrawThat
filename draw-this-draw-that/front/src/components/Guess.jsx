@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import notyf from "../helpers/notyf";
 import styled from "styled-components";
-
+import "./Loader/style.css";
 const StyledContainer = styled.div`
   text-align: center;
   background-color: lightblue;
@@ -24,7 +24,7 @@ export default function Guess(props) {
   const [level, setLevel] = useState("");
 
   const checkWord = ({ target: { value } }) => {
-    if (value === word) {
+    if (value.toLowerCase() === word.toLowerCase()) {
       socket.emit("change-score", { level });
       notyf.success("guessed the word");
       navigator("/game");
@@ -36,14 +36,14 @@ export default function Guess(props) {
     setWord(data.word);
     setLevel(data.level);
   });
-  socket.on("left-game", () => {
-    notyf.success(`your opponent has disconnected, the game is over!r!`);
-  });
   return (
     <>
       <StyledContainer>
         {wait ? (
-          "other player currently drawing . . ."
+          <>
+            <h3>other player currently drawing . . .😴</h3>
+            <span className="loader" style={{ marginTop: "20vh" }}></span>
+          </>
         ) : (
           <div>
             <h3>Guess ✏️</h3>

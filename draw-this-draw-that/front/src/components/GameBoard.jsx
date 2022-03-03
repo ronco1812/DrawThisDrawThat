@@ -2,7 +2,6 @@ import DrawBoard from "./DrawBoard";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import notyf from "../helpers/notyf";
 const StyledContainer = styled.div`
   text-align: center;
   background-color: lightblue;
@@ -38,9 +37,6 @@ export default function GameBoard(props) {
   useEffect(() => {
     if (draw) {
       socket.emit("submit-draw", { draw, word, level });
-      socket.on("left-game", () => {
-        notyf.success(`your opponent has disconnected, the game is over!`);
-      });
       navigator("/guess");
     }
 
@@ -60,7 +56,7 @@ export default function GameBoard(props) {
               style={{
                 width: "300px",
                 height: "300px",
-                marginLeft: "250px",
+                marginLeft: "365px",
                 backgroundColor: "lightyellow",
                 border: "4px solid black",
               }}

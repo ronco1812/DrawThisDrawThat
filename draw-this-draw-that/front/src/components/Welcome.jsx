@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import styled from "styled-components";
 import notyf from "../helpers/notyf";
+
 const StyledContainer = styled.div`
   text-align: center;
   background-color: lightblue;
@@ -27,13 +28,14 @@ export default function Welcome(props) {
   const submitName = () => {
     if (!name) return;
     socket.emit("submit-name", { name });
-    socket.on("left-game", () => {
-      notyf.success(`your opponent has disconnected, the game is over!`);
-    });
     socket.on("name-submitted", (data) =>
       data.load ? navigator("/loader") : navigator("/guess")
     );
+    socket.on("full", () => {
+      notyf.success("2 players already playing!");
+    });
   };
+
   return (
     <StyledContainer>
       <h1 style={{ fontSize: "xxx-large" }}>Draw this Draw that ✏️</h1>
